@@ -27,8 +27,7 @@ public class UserService {
         existingUser.setEmail(user.getEmail());
         existingUser.setRole(user.getRole());
         return userRepository.save(existingUser);
-    }
-;jljlkjklhhklhkhlkj;llllllllllllllllllllllllllllllllll;uollilutiuoiopuppy9999ypp9u799779uuouou
+    };
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
