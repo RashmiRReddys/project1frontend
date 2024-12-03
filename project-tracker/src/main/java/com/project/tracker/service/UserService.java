@@ -28,6 +28,7 @@ public class UserService {
         existingUser.setRole(user.getRole());
         return userRepository.save(existingUser);
     };
+    
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
