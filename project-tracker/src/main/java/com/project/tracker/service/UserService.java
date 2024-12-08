@@ -22,21 +22,29 @@ public class UserService {
     }
 
     public User updateUser(Long id, User user) {
-        User existingUser = userRepository.findById(id).orElseThrow();
+        User existingUser = userRepository.findById(id).orElseThrow(() -> 
+            new RuntimeException("User not found with ID: " + id));
         existingUser.setName(user.getName());
         existingUser.setEmail(user.getEmail());
         existingUser.setRole(user.getRole());
         return userRepository.save(existingUser);
-    };
-    
+    }
+
     public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
+
     public User authenticate(String email, String password) {
         User user = userRepository.findByEmail(email);
-        if (user != null && user.getPassword().equals(password)) { // Adjust for hashed passwords
+        if (user != null && verifyPassword(password, user.getPassword())) {
             return user;
         }
         return null;
+    }
+
+    // Helper method to verify hashed passwords
+    private boolean verifyPassword(String rawPassword, String hashedPassword) {
+        // Use a secure password encoder like BCryptPasswordEncoder
+        return rawPassword.equals(hashedPassword); // Replace with encoder.matches(rawPassword, hashedPassword)
     }
 }
